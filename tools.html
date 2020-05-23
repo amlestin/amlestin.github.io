@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120974367-1"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120974367-1');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Arnold's Tools for Schools</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<!--
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+-->
+<style>
+body{
+  margin-top:20px;
+  background:#333;
+  color:#ffffff
+}
+
+.card{
+  background-color:rgb(51, 51, 51); !important
+}
+
+
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 offset-md5">
+        <h1 class="display-4 text-center mb-4">
+          Arnold's Tools for Schools
+        </h1>
+
+        <h1 class="display-5 text-center mb-4">
+          GRE Time-machine (New to Old format)
+        </h1>
+
+        <form>
+          <div class="form-group">
+            <input
+            id="scoreInput"
+            type="text"
+            class="form form-control-lg"
+            placeholder="Verbal/Quantitative"
+            autocomplete="off"
+            >
+          </div>
+        </form>
+
+        <div id="ouptut">
+          <div class="card">
+            <div class="card card-success mb-2">
+              <div class="card-block">
+                <h4>Verbal: </h4>
+                <id id="verbalOutput"></id>
+              </div>
+            </div>
+
+            <div class="card card-danger mb-2">
+              <div class="card-block">
+                <h4>Quantitative: </h4>
+                <id id="quantitativeOutput"></id>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <center>
+    <form>
+      <div class="form-group">
+        <input id="crnInput"
+        type="text"
+        class="form form-control-lg"
+        placeholder="CRNs in column form"
+        autocomplete="off">
+      </div>
+
+    </form>
+  </center>
+
+  <h1 class="display-5 text-center mb-4">
+    CRN Formatter: Space separated to ',' Separated values
+  </h1>
+
+  <div class="col-md-12 offset-md5">
+
+    <div class="card card-warning mb-2">
+      <div class="card-block" style="word-wrap: break-word; max-width: 100%;">
+        <h4>Formatted CRNs: </h4>
+        <id id="crnOutput"></id>
+      </div>
+    </div>
+
+  </div>
+
+  <hr />
+  <h1 class="display-5 text-center mb-4">
+    R Canvas Exam Answer Sheet Maker AKA <br /> <i>ExamineR</i>
+  </h1>
+  <hr />
+  <center>
+    Link to R:
+    <a  href = "https://www.r-project.org/" target="_blank">Download R Studio</a>
+    <br />
+    Link to Exam Processing Script:
+    <a href="ExamineR.R" download>Download <b>ExamineR</b> script</a>
+    <br />
+    <div class="embed-responsive embed-responsive-16by9">
+
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/gZ-68cv9v5o" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>            </div>
+    </center>
+
+    <script>
+
+    function ajax_get(url, callback) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          console.log('responseText:' + xmlhttp.responseText);
+          try {
+            var data = JSON.parse(xmlhttp.responseText);
+          } catch(err) {
+            console.log(err.message + " in " + xmlhttp.responseText);
+            return;
+          }
+          callback(data);
+        }
+      };
+
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+    }
+
+    document.getElementById('crnInput').addEventListener('input', function(e) {
+
+      document.getElementById('crnOutput').innerHTML = e.target.value.split(" ").join("\',\'")
+
+    });
+
+    document.getElementById('scoreInput').addEventListener('input', function(e){
+      let inputText = e.target.value;
+      let inputVector = inputText.split("/");
+      let verbalInput = inputVector[0];
+      let quantitativeInput = inputVector[1];
+
+      let verbal_table = {
+        "170":"800",
+        "169":"750",
+        "168":"730",
+        "167":"710",
+        "166":"700",
+        "165":"690",
+        "164":"670",
+        "163":"650",
+        "162":"640",
+        "161":"620",
+        "160":"610",
+        "159":"590",
+        "158":"580",
+        "157":"560",
+        "156":"550",
+        "155":"530",
+        "154":"520",
+        "153":"500",
+        "152":"490",
+        "151":"470",
+        "150":"450",
+        "149":"440",
+        "148":"420",
+        "147":"410",
+        "146":"400",
+        "145":"380",
+        "144":"370",
+        "143":"360",
+        "142":"340",
+        "141":"330",
+        "140":"320",
+        "139":"310",
+        "138":"300",
+        "137":"290",
+        "135":"280",
+        "134":"270",
+        "133":"260",
+        "132":"250",
+        "131":"240",
+        "130":"230"
+      };
+
+      let quantitative_table = {
+        "166":"800",
+        "164":"790",
+        "163":"780",
+        "161":"770",
+        "160":"760",
+        "159":"750",
+        "158":"740",
+        "157":"730",
+        "156":"720",
+        "155":"710",
+        "154":"690",
+        "153":"680",
+        "152":"670",
+        "151":"650",
+        "150":"630",
+        "149":"620",
+        "148":"600",
+        "147":"580",
+        "146":"560",
+        "145":"540",
+        "144":"520",
+        "143":"490",
+        "142":"470",
+        "141":"450",
+        "140":"420",
+        "139":"390",
+        "138":"370",
+        "137":"340",
+        "136":"320",
+        "135":"290",
+        "134":"270",
+        "133":"250",
+        "132":"230",
+        "131":"210"
+      };
+
+
+      if (inputVector.length == 2)	{
+        document.getElementById('verbalOutput').innerHTML = verbal_table[verbalInput];
+        document.getElementById('quantitativeOutput').innerHTML = quantitative_table[quantitativeInput];
+      }
+
+    });
+    </script>
+
+  </body>
+  </html>
